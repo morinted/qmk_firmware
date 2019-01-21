@@ -33,6 +33,8 @@ static uint8_t displaying;
 #endif
 static uint16_t last_flush;
 
+extern uint8_t is_master;
+
 static bool force_dirty = true;
 
 // Write command sequence.
@@ -152,7 +154,11 @@ bool iota_gfx_init(bool rotate) {
   }
 
   send_cmd2(SetComPins, 0x2);
-  send_cmd2(SetContrast, 0x8f);
+  if (is_master) {
+    send_cmd2(SetContrast, 0);
+  } else {
+    send_cmd2(SetContrast, 255);
+  }
   send_cmd2(SetPreCharge, 0xf1);
   send_cmd2(SetVComDetect, 0x40);
   send_cmd1(DisplayAllOnResume);
@@ -160,7 +166,7 @@ bool iota_gfx_init(bool rotate) {
   send_cmd1(DeActivateScroll);
   send_cmd1(DisplayOn);
 
-  send_cmd2(SetContrast, 0); // Dim
+  //send_cmd2(SetContrast, 0); // Dim
 
   clear_display();
 

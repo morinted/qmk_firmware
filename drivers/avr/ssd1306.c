@@ -154,7 +154,7 @@ bool iota_gfx_init(void) {
   send_cmd1(DeActivateScroll);
   send_cmd1(DisplayOn);
 
-  send_cmd2(SetContrast, 0); // Dim
+  //send_cmd2(SetContrast, 0); // Dim
 
   clear_display();
 
